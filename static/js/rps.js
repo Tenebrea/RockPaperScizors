@@ -16,9 +16,16 @@ function playGame() {
     let humanScore = 0
     let computerScore = 0
 
+    function resetScore() {
+        humanScore = 0
+        computerScore = 0
+    }
+
     function playRound(humanChoice, computerChoice) {
         const localHumanChoice = humanChoice.toLowerCase()
         const localComputerChoice = computerChoice.toLowerCase()
+
+        if (computerScore === 5 || humanScore === 5) resetScore()
 
         if (localComputerChoice === "rock") {
             if (localHumanChoice === "paper") {
@@ -50,23 +57,27 @@ function playGame() {
             console.log("It's a tie!")
         }
         console.log(`Current score is: Player-${humanScore} and Computer-${computerScore}`)
+        if (humanScore === 5) {
+            console.log("You win! Congratulations!")
+        } else if (computerScore === 5) {
+            console.log("You lost... Better luck next time!")
+        }
     }
 
-    let computer
-    let human
+    const rockBtn = document.querySelector("#rock");
+    const paperBtn = document.querySelector("#paper");
+    const scizorsBtn = document.querySelector("#scizors");
 
-    for (let i = 0; i < 5; i++) {
-        computer = getComputerChoice()
-        human = getHumanChoice()
-        playRound(human, computer)
-    }
-    if (computerScore < humanScore) {
-        console.log("You win! Congratulations!")
-    } else if (computerScore > humanScore) {
-        console.log("You lost... Better luck next time!")
-    } else {
-        console.log("It's a tie! Friendship wins!")
-    }
+    rockBtn.addEventListener("click", (e) => {
+        playRound("rock", getComputerChoice())
+    });
+    paperBtn.addEventListener("click", (e) => {
+        playRound("paper", getComputerChoice())
+    });
+    scizorsBtn.addEventListener("click", (e) => {
+        playRound("scizors", getComputerChoice())
+    });
+
 }
 
 playGame()
